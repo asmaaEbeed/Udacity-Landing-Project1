@@ -17,7 +17,7 @@
  * Define Global Variables
  * 
 */
-
+var sectionIdArr = new Array()
 
 /**
  * End Global Variables
@@ -60,12 +60,17 @@ function createLiLinks(allSectionList, ulElement){
         const newLink = document.createElement('a');
         newLink.classList.add('menu__link');
         
+        newLink.setAttribute("href", `#${sectionListItem.getAttribute('id')}`);
+        //get all section id in sectionIDArr variable
+        sectionIdArr.push(sectionListItem.getAttribute('id'));
+        
         newLink.textContent = sectionListItem.getAttribute('data-nav');
         //console.log(newLink.textContent);
         
         newLi.appendChild(newLink);
         fragmentLi.appendChild(newLi);
     }
+    
     ulElement.appendChild(fragmentLi);
 }
 
@@ -73,8 +78,31 @@ function createLiLinks(allSectionList, ulElement){
 
 
 // Scroll to anchor ID using scrollTO event
-
-
+document.querySelector('#navbar__list').addEventListener('click', function(evt){
+    if(evt.target.nodeName === 'A'){
+        console.log("href was clicked"+evt.target.textContent);
+        const htarget = evt.target.attributes.href.nodeValue;
+        //to get target without # sign
+        const targetIDOnly = htarget.slice(1);
+        //for--of loop to get section that has ID equal clicked link href with #
+       for(const sectionIDName of sectionIdArr){
+           if(sectionIDName !== '' && targetIDOnly !==''){
+               if(sectionIDName === targetIDOnly){
+                   
+                    evt.preventDefault();
+                    console.log(sectionIDName + targetIDOnly);
+                   //const sectionPosition = document.sectionIDName.getBoundingClientRect();
+                    const sectionPosition = document.getElementById(sectionIDName).getBoundingClientRect(),
+                          topSection = window.pageYOffset;
+                   window.scrollTo({
+                      top: sectionPosition.top + topSection,
+                      behavior: 'smooth'
+                    });
+               }
+           }
+       }
+    }
+});
 /**
  * End Main Functions
  * Begin Events
