@@ -1,11 +1,57 @@
-first build dynamic navbar according to section in the page.
-start code to build navbar after Dom loaded using 'DOMContentLoaded' eventlistener to ensure that all section loaded and added to navbar
-then invoke createLiLinks() function
-construct createLiLinks() function with two argument first is sectionList and second ulElement.
-create fragmentLi variable from createDocumentFragment() to not affected on decument and dont cause reflow and repaint each time we loop.
-create for--of loop to loop in section list and in every loop it create li and a link abd add class menu__link to each a link
-use data-nav attribute text to add to links
-use appendChild() function to add each link to its li.
-use appendChild() function to add each li to fragmentLi 
+# Front End Nanodegree Program 1st Project
 
-after end for--of loop add fragmentLi to  ulElement.
+Front End Nanodegree Landing Project, 
+This Project code created by pure JavaScript Code without any Jquery Library or any other external Library.
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Project Concept
+
+* Build Navigation is built dynamically as an unordered list.
+* Section active state to show which section is being viewed while scrolling through the page.
+* When clicking an item from the navigation menu, the link should scroll to the appropriate section. 
+* Add an active state to your navigation items when a section is in the viewport.
+* Add a scroll to top button on the page that’s only visible when the user scrolls below the fold of the page.
+
+### Code Idea
+
+#### Build Nav dynamic
+
+* first build dynamic navbar with links according to number of section in the page.
+
+* Make sure that build dynamic nav code start after Dom loaded using ```DOMContentLoaded``` eventlistener to ensure that all section loaded and added to navbar.
+
+* invoke ```createLiLinks(listOfAllSection, ulId)``` function with two argument.
+    - this function create ```<li>``` and append child ```<a>``` to it, and give link href attribute according section ID,
+    use data-nav attribute to get text to link.
+    - then append all ```<li>``` to ```<ul>``` at one time to prevent reflow using ```createDocumentFragment()```.
+
+#### click on link make Scroll to anchor ID using scrollTO event
+
+* Fire this event when 'Click' on nav link using ```addEventListener('click', function(){})```.
+
+* Get href Attribute without # sign to compare it with section ID passing event to get which Link is Clicked,
+and ensure the clicked is on link element.
+
+* Get the section position by ```.getBoundingClientRect()``` function and ```window.pageYOffset``` then ```window.scrollTo``` to
+section position with smooth scroll
+
+#### createTopDiv
+
+* Add this div to DOM with its style and make it hide to scroll to top when user scrolls below the fold of the page 
+using ```createTopDiv()``` function that invoke after DOMContentLoaded.
+
+* When document scroll event fire it call function ```showToTop()``` to make this div only visible when the user scrolls below the fold of the page.
+
+* Then invoke ```goToTop()``` to go to top of window when Click event is fire.
+
+#### Add Active class to navigation links when its section is in the viewport & add active class to section in viewport.
+
+* ```.getBoundingClientRect()``` of all sections during we scroll with For--Of Loop.
+
+* check if ```sectionPosition.top``` , ```sectionPosition.bottom``` is in viewport, then add class active to this section and remove this class from sibling, and make for--loop to get links with attribute is same to id of this section then add class active to this link  and remove this class from sibling.
+  
+
+

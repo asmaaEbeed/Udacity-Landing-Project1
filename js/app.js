@@ -25,7 +25,7 @@
  * Define Global Variables
  * 
 */
-//define sectionIdArr variable ti get all section id
+//define sectionIdArr variable to get all section id
 var sectionIdArr = new Array();
 
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function(){
     createLiLinks(allSectionList, ulElement);   //call createLiLinks function to create Li with its Links
     
     createTopDiv();     //Call createTopDiv to create element
-    
+    setTimeout(hideNav, 3000);
   /*  const t1 = performance.now();   //End performance time
     
     
@@ -53,7 +53,8 @@ document.addEventListener('DOMContentLoaded', function(){
     
     console.log(`this take ${difference} millisecond`); */
 });
-// build the nav
+
+// build nav by ul.appendchid(li) to ul and li.appendchild(a)
 function createLiLinks(allSectionList, ulElement){
     const fragmentLi = document.createDocumentFragment();
     //create for--of loop to add links to liFragment object
@@ -68,7 +69,7 @@ function createLiLinks(allSectionList, ulElement){
         sectionIdArr.push(sectionListItem.getAttribute('id'));
 
         
-        
+        //set nav link text with same text of 'data-nav' section attribute
         newLink.textContent = sectionListItem.getAttribute('data-nav');
         //console.log(newLink.textContent);
         
@@ -84,7 +85,6 @@ function createLiLinks(allSectionList, ulElement){
 // Scroll to anchor ID using scrollTO event
 document.querySelector('#navbar__list').addEventListener('click', function(evt){
     if(evt.target.nodeName === 'A'){
-        showNav();
         const htarget = evt.target.attributes.href.nodeValue;
         //to get target without # sign
         const targetIDOnly = htarget.slice(1);
@@ -96,8 +96,8 @@ document.querySelector('#navbar__list').addEventListener('click', function(evt){
                     evt.preventDefault();
                     const sectionPosition = document.getElementById(sectionIDName).getBoundingClientRect(),
                           topSection = window.pageYOffset;
-                   console.log(topSection + "_" + sectionPosition.top);
-                   console.log(topSection  + sectionPosition.top);
+                   //console.log(topSection + "_" + sectionPosition.top);
+                   //console.log(topSection  + sectionPosition.top);
                    window.scrollTo({
                       top: sectionPosition.top + topSection,
                       behavior: 'smooth'
@@ -114,8 +114,11 @@ document.querySelector('#navbar__list').addEventListener('click', function(evt){
 */
 document.addEventListener("scroll", function(){
     showNav();
+    setTimeout(hideNav, 3000);
     //Add this code to only visible when the user scrolls below the fold of the page.
     showToTop();
+    //to add active class to a link in navbar according section is in viewport
+    addActiveToHref();
  
 });
 
@@ -127,7 +130,7 @@ document.addEventListener("scroll", function(){
 
 /*try to add active to section in window*/
 
-document.addEventListener('scroll',function(){
+function addActiveToHref(){
     const aLinksList = document.querySelectorAll('#navbar__list a');
     //console.log(aLinksList);
     for(var sectionId of sectionIdArr){
@@ -138,34 +141,40 @@ document.addEventListener('scroll',function(){
             if(sectionPosition.top > 0  && 
                sectionPosition.bottom<window.innerHeight &&
                (sectionPosition.top-sectionPosition.bottom)<window.innerHeight){
-                console.log(sectionId +"+pageyoffset"+ window.pageYOffset+"sectionPosition.top" + sectionPosition.top);
+                //console.log(sectionId +"+pageyoffset"+ window.pageYOffset+"sectionPosition.top" + sectionPosition.top);
+                
+                //add class active to section in viewport
                 document.getElementById(sectionId).classList.add('your-active-class');
+                
+                //for looop to remove class active from sibling
                 for(const sectionIdNotthis of sectionIdArr){
                     if(sectionIdNotthis !== sectionId)
                         document.getElementById(sectionIdNotthis).classList.remove('your-active-class');
                 }
                 for(const linkArr of aLinksList){
-                    console.log("link"+linkArr.getAttribute('href').slice(1)+" type " + typeof(linkArr.getAttribute('href').slice(1)));
-                    console.log("section"+sectionId + "type" + typeof(sectionId));
+                    //console.log("link"+linkArr.getAttribute('href').slice(1)+" type " + typeof(linkArr.getAttribute('href').slice(1)));
+                    //console.log("section"+sectionId + "type" + typeof(sectionId));
                     
                     //const linkref = linkArr.getAttribute('href').slice(1);
+                    
+                    //add class active to link that its section in viewport
                     if(linkArr.getAttribute('href').slice(1) === sectionId){
                         linkArr.classList.add('active');
                         
                     } else{
+                        //remove class active from sibling link
                         linkArr.classList.remove('active');
-                       // document.getElementById(sectionId).classList.remove('your-active-class');
                     }
                 
             }
             } 
         }
     }
-});
+}
 //remove active class from all link
 
 /*to top button*/
-//Add a scroll to top button on the page
+//creat a scroll to top button
 function createTopDiv(){
     const divToTop = document.createElement('div');
     divToTop.textContent = "TOP";
@@ -173,8 +182,8 @@ function createTopDiv(){
     divToTop.style.cssText = 'font-size: 25px; font-family: monospace; position: fixed; bottom: 10px; right: 10px; background-color: #7ebda3; padding: 18px 14px; box-shadow: 2px 2px 0 #fff; border-radius: 50%; cursor: pointer; display: none;';
     
     document.body.appendChild(divToTop);
-    //call function to go to top when click on top
     
+    //call function gototop when click on top
     goToTop(divToTop);
     
 }
@@ -200,14 +209,12 @@ function showToTop(){
 function showNav() {
         const navbarMenu = document.getElementById('navbar__list');
         navbarMenu.style.display = 'block';
-        hideNav();
+        setTimeout(hideNav, 3000);
 
 }  
 function hideNav() {
-    setTimeout(function hideAfterTime(){
         const navbarMenu = document.getElementById('navbar__list');
         navbarMenu.style.display = 'none';
-    }, 4000);
 }  
 
     
