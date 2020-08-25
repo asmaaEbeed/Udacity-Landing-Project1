@@ -12,7 +12,8 @@
 /* ---- Base Rules ---- */
 body {
     background: rgb(136,203,171);
-    background: linear-gradient(0deg, rgba(136,203,171,1) 0%, rgba(0,13,60,1) 100%);
+    /*background: linear-gradient(0deg, rgba(136,203,171,1) 0%, rgba(0,13,60,1) 100%);*/
+    background: linear-gradient(0deg, rgb(181 79 232) 0%, rgb(0 176 181) 100%);
     margin: 0;
     font-family: 'Merriweather', serif;
     color: #fff;
@@ -45,7 +46,7 @@ h2 {
     cursor: pointer;
     transition: ease 0.3s all
 }
-h2:hover, .active{
+h2:hover, .activeh{
     background-color: rgba(27, 47, 62,  1);
 }
 
@@ -88,13 +89,17 @@ section {
     padding: 1em;
     font-weight: bold;
     text-decoration: none;
-    color: #000;
+    color: #285a7d;
+    border-bottom: 3px solid #fff;
 }
 
 .navbar__menu .menu__link:hover, .menu__link.active {
     background: #333;
+    /*background: linear-gradient(0deg, rgb(181 79 232) 0%, rgb(0 176 181) 40%);*/
+    background-color: #285a7d;
     color: #fff;
     transition: ease 0.3s all;
+    border-bottom: 3px solid #cc1;
 }
 
 
@@ -136,7 +141,7 @@ section {
 section:nth-of-type(even) .landing__container {
     margin-right: 0;
     margin-left: auto;
-    text-align: right; 
+    /*text-align: right;*/ 
 }
 
 /* Background Circles */
@@ -242,4 +247,15 @@ section.your-active-class .landing__container::after {
 }
 .collapse{
     display: none
+}
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+font-size: 0.8em;
+}
+.activeh:after {
+  content: "\2212";
 }

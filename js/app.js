@@ -26,16 +26,17 @@
  * 
 */
 //define sectionIdArr variable to get all section id
-var sectionIdArr = new Array();
+"use strict";
+var sectionIdArr = [];
 
-
+/*use strict*/
 /**
  * End Global Variables
 
  * Begin Main Functions
  * 
 */
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function () {
     //start performance time
     //const   t0 = performance.now();
     //get all section element in allSectionList Variable
@@ -46,11 +47,11 @@ document.addEventListener('DOMContentLoaded', function(){
     
     createTopDiv();     //Call createTopDiv to create element
     
-    setTimeout(hideNav, 3000);
+    setTimeout(hideNav, 3000);      //call to hide nav after 3 sec of load if page not scroll
     
-    showNavATScroll();
+    showNavATScroll();      //call this to detect if document is scrolling show nav and if stop scroll hide nav after 3 sec
     
-    
+    collapse();         //to make section paragraph collapse
     
   /*  const t1 = performance.now();   //End performance time
     
@@ -77,7 +78,6 @@ function createLiLinks(allSectionList, ulElement){
         
         //set nav link text with same text of 'data-nav' section attribute
         newLink.textContent = sectionListItem.getAttribute('data-nav');
-        //console.log(newLink.textContent);
         
         newLi.appendChild(newLink);
         fragmentLi.appendChild(newLi);
@@ -88,7 +88,7 @@ function createLiLinks(allSectionList, ulElement){
 // Add class 'active' to section when near top of viewport
 
 
-// Scroll to anchor ID using scrollTO event
+// Scroll to section on link click
 document.querySelector('#navbar__list').addEventListener('click', function(evt){
     if(evt.target.nodeName === 'A'){
         const htarget = evt.target.attributes.href.nodeValue;
@@ -113,13 +113,10 @@ document.querySelector('#navbar__list').addEventListener('click', function(evt){
        }
     }
 });
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
+
 
 function showNavATScroll(){
+    //define timer as var to be declare before assignment
     var timer;
     document.addEventListener("scroll", function(){
         if(timer != "undefined"){
@@ -137,16 +134,10 @@ document.addEventListener("scroll", function(){
     
     //Add this code to only visible when the user scrolls below the fold of the page.
     showToTop();
-    //to add active class to a link in navbar according section is in viewport
+    //to add active class to a link in navbar when scroll according section is in viewport
     addActiveToHref();
  
 });
-
-
-// Build menu 
-
-// Scroll to section on link click
-
 // Set sections as active
 
 /*try to add active to section in window*/
@@ -192,15 +183,13 @@ function addActiveToHref(){
         }
     }
 }
-//remove active class from all link
 
-/*to top button*/
 //creat a scroll to top button
 function createTopDiv(){
     const divToTop = document.createElement('div');
     divToTop.textContent = "TOP";
     divToTop.setAttribute('id', 'goTop');
-    divToTop.style.cssText = 'font-size: 25px; font-family: monospace; position: fixed; bottom: 10px; right: 10px; background-color: #7ebda3; padding: 18px 14px; box-shadow: 2px 2px 0 #fff; border-radius: 50%; cursor: pointer; display: none;';
+    divToTop.style.cssText = 'font-size: 25px; font-family: monospace; position: fixed; bottom: 10px; right: 10px; background-color: rgb(7, 172, 183); padding: 18px 14px; box-shadow: 2px 2px 0 #fff; border-radius: 50%; cursor: pointer; display: none;';
     
     document.body.appendChild(divToTop);
     
@@ -238,6 +227,8 @@ function hideNav() {
         navbarMenu.style.display = 'none';
 }  
 
+//↓↓ not need any more .. it was create to add span with collapse sign
+//but i added it from style as  :after
 /*function createSpanCollapse(sectionList) {
     //create for--of loop to add span to each h2 in each section to liFragment object
     for(const sectionListItem of sectionList){
@@ -260,25 +251,21 @@ function hideNav() {
     }
 }*/
 
-/*document.querySelector('section').addEventListener('click', function(evt){
-    if(evt.target.nodeName === 'SPAN'){
-        console.log(evt.target.attributes.class.nodeValue);
-        //if(evt.target.attributes.class.nodeValue === 'collapseSpan')
-           // evt.target.classList.add('collapse');
-    }
-    console.log(evt.querySelector('section-p'));
-    });*/
 
 //start code to make section content collapse when click on section H2
-const coll = document.getElementsByClassName("collapsible");
+
+function collapse(){
+    const coll = document.getElementsByClassName("collapsible");
 
 for (let collapseHeading of coll) {
     collapseHeading.addEventListener("click", function() {
-    this.classList.toggle("active");
+    this.classList.toggle("activeh");
     var content = this.nextElementSibling;
     content.classList.toggle('collapse');
   });
 }
+}
+
 
 
 
