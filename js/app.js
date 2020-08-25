@@ -45,7 +45,13 @@ document.addEventListener('DOMContentLoaded', function(){
     createLiLinks(allSectionList, ulElement);   //call createLiLinks function to create Li with its Links
     
     createTopDiv();     //Call createTopDiv to create element
+    
     setTimeout(hideNav, 3000);
+    
+    showNavATScroll();
+    
+    
+    
   /*  const t1 = performance.now();   //End performance time
     
     
@@ -112,15 +118,30 @@ document.querySelector('#navbar__list').addEventListener('click', function(evt){
  * Begin Events
  * 
 */
+
+function showNavATScroll(){
+    var timer;
+    document.addEventListener("scroll", function(){
+        if(timer != "undefined"){
+            clearTimeout(timer);
+        }
+        showNav();
+        timer = setTimeout(function(){
+            hideNav();
+        }, 2000);
+        
+    });
+   
+}
 document.addEventListener("scroll", function(){
-    showNav();
-    setTimeout(hideNav, 3000);
+    
     //Add this code to only visible when the user scrolls below the fold of the page.
     showToTop();
     //to add active class to a link in navbar according section is in viewport
     addActiveToHref();
  
 });
+
 
 // Build menu 
 
@@ -209,7 +230,7 @@ function showToTop(){
 function showNav() {
         const navbarMenu = document.getElementById('navbar__list');
         navbarMenu.style.display = 'block';
-        setTimeout(hideNav, 3000);
+        //setTimeout(hideNav, 3000);
 
 }  
 function hideNav() {
@@ -217,7 +238,47 @@ function hideNav() {
         navbarMenu.style.display = 'none';
 }  
 
-    
+/*function createSpanCollapse(sectionList) {
+    //create for--of loop to add span to each h2 in each section to liFragment object
+    for(const sectionListItem of sectionList){
+
+     
+        const spanText = '<span class="collapseSpan"> - </span>'
+        const landContainerDiv= sectionListItem.firstElementChild;
+        const textAlignOfDiv = getComputedStyle(landContainerDiv);
+        const landingH2 = landContainerDiv.firstElementChild;
+        //console.log(sectionListItem);        //console.log(textAlignOfDiv.textAlign);
+
+        if(textAlignOfDiv.textAlign === 'left'){
+            //console.log(landContainerDiv.firstElementChild);
+            landingH2.insertAdjacentHTML('afterbegin', spanText);
+        } else{
+            landingH2.insertAdjacentHTML('beforeend', spanText);
+        }
+            
+        
+    }
+}*/
+
+/*document.querySelector('section').addEventListener('click', function(evt){
+    if(evt.target.nodeName === 'SPAN'){
+        console.log(evt.target.attributes.class.nodeValue);
+        //if(evt.target.attributes.class.nodeValue === 'collapseSpan')
+           // evt.target.classList.add('collapse');
+    }
+    console.log(evt.querySelector('section-p'));
+    });*/
+
+//start code to make section content collapse when click on section H2
+const coll = document.getElementsByClassName("collapsible");
+
+for (let collapseHeading of coll) {
+    collapseHeading.addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    content.classList.toggle('collapse');
+  });
+}
 
 
 

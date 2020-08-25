@@ -5,7 +5,9 @@ This Project code created by pure JavaScript Code without any Jquery Library or 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+It was A Big Challenge to me to write this code with PURE JAVASCRIPT code ONLY.....
+
+Without need any other library as jquery
 
 ### Project Concept
 
@@ -14,6 +16,8 @@ These instructions will get you a copy of the project up and running on your loc
 * When clicking an item from the navigation menu, the link should scroll to the appropriate section. 
 * Add an active state to your navigation items when a section is in the viewport.
 * Add a scroll to top button on the page that’s only visible when the user scrolls below the fold of the page.
+* Hide fixed navigation bar while not scrolling.
+* Make sections collapsible.
 
 ### Code Idea
 
@@ -52,6 +56,15 @@ using ```createTopDiv()``` function that invoke after DOMContentLoaded.
 * ```.getBoundingClientRect()``` of all sections during we scroll with For--Of Loop.
 
 * check if ```sectionPosition.top``` , ```sectionPosition.bottom``` is in viewport, then add class active to this section and remove this class from sibling, and make for--loop to get links with attribute is same to id of this section then add class active to this link  and remove this class from sibling.
+
+#### Hide fixed navigation bar while not scrolling
+* create two function ```showNave()``` & ```hideNave()``` to make nav element display block or none.
+
+* create function ```showNavATScroll()``` detect event if page scroll invoke showNav function then it invoke hideNav function after 3 sec using setTimeOut but sure first timer is ended.
+
+#### make selection collapse
+
+by toggle('collapse') class to the div that contain all p in section.
   
 
 
